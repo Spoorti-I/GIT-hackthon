@@ -25,9 +25,9 @@ class ThreatRepository(private val dao: ScanDao) {
     suspend fun deleteAll() = dao.deleteAll()
 
     suspend fun getStats(): Triple<Int, Int, Int> {
-        val total = dao.getTotalCount()
+        val total  = dao.getTotalCount()
         val threats = dao.getThreatCount()
-        val safe = dao.getSafeCount()
+        val safe   = dao.getSafeCount()
         return Triple(total, threats, safe)
     }
 
@@ -39,5 +39,23 @@ class ThreatRepository(private val dao: ScanDao) {
 
     suspend fun addToWhitelist(sender: String, database: ThreatDatabase) {
         database.whitelistDao().addToWhitelist(UserWhitelist(sender))
+    }
+
+    // ── Layer 9: User Feedback Learning ───────────────────────────────────
+
+    suspend fun markSenderSafe(sender: String, database: ThreatDatabase, snippet: String = "") {
+        database.feedbackDao().saveFeedback(
+            FeedbackRecord(sender = sender, isSafe = true, messageSnippet = snippet.take(80))
+        )
+    }
+
+    suspend fun markSenderPhishing(sender: String, database: ThreatDatabase, snippet: String = "") {
+        database.feedbackDao().saveFeedback(
+            FeedbackRecord(sender = sender, isSafe = false, messageSnippet = snippet.take(80))
+        )
+    }
+
+    suspend fun getFeedbackForSender(sender: String, database: ThreatDatabase): FeedbackRecord? {
+        return database.feedbackDao().getFeedbackForSender(sender)
     }
 }

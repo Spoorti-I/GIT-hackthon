@@ -11,8 +11,8 @@ import androidx.room.TypeConverters
  * Uses singleton pattern to prevent multiple instances.
  */
 @Database(
-    entities = [ScanRecord::class, UserWhitelist::class],
-    version = 2,
+    entities = [ScanRecord::class, UserWhitelist::class, FeedbackRecord::class],
+    version = 3,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -20,6 +20,7 @@ abstract class ThreatDatabase : RoomDatabase() {
 
     abstract fun scanDao(): ScanDao
     abstract fun whitelistDao(): WhitelistDao
+    abstract fun feedbackDao(): FeedbackDao
 
     companion object {
         @Volatile

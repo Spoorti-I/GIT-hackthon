@@ -24,7 +24,10 @@ enum class SignalType {
     SHORTENED_URL,
     SUSPICIOUS_TLD,
     SENDER_SUSPICIOUS,
-    COMBINATION_ATTACK
+    COMBINATION_ATTACK,
+    ML_CLASSIFICATION,
+    USER_FEEDBACK,
+    TWILIO_SPOOFED
 }
 
 enum class SignalSeverity {
@@ -37,11 +40,12 @@ enum class SignalSeverity {
 data class SmsScanResult(
     val isPhishing: Boolean,
     val score: Int,
-    val category: String,           // SAFE | SUSPICIOUS | PHISHING
+    val category: String,           // SAFE | LOW RISK | PROMOTIONAL | SUSPICIOUS | PHISHING
     val signals: List<SmsRiskSignal>,
     val detectedUrls: List<String>,
     val senderRisk: SenderRisk?,
-    val analysisMs: Long
+    val analysisMs: Long,
+    val mlCategory: MlMessageCategory = MlMessageCategory.UNKNOWN
 ) {
     val signals_summary: String
         get() = signals.joinToString(", ") { it.label }
@@ -53,5 +57,20 @@ data class SenderRisk(
     val impersonatedBrand: String?,
     val riskScore: Int,
     val detail: String,
-    val isVerified: Boolean = false
+    val isVerified: Boolean = false,
+    val trustLevel: TrustLevel = TrustLevel.UNKNOWN
 )
+
+/**
+ * ML classification category for a message.
+ */
+enum class MlMessageCategory {
+    SAFE,
+    PROMOTIONAL,
+    OTP,
+    BANKING,
+    TELECOM,
+    SOCIAL,
+    PHISHING,
+    UNKNOWN
+}
