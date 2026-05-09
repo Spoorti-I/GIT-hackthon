@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mock Chat Interface</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; }
+    .chat-container { max-width: 600px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; flex-direction: column; height: 80vh; overflow: hidden; }
+    .chat-header { background: #075e54; color: white; padding: 15px; font-weight: bold; font-size: 18px; }
+    .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+    .message { max-width: 80%; padding: 10px 15px; border-radius: 8px; line-height: 1.4; }
+    .message.received { background: #e1ffc7; align-self: flex-start; border-bottom-left-radius: 0; }
+    .message.sent { background: #f1f0f0; align-self: flex-end; border-bottom-right-radius: 0; }
+    .chat-input { display: flex; padding: 15px; border-top: 1px solid #ddd; background: #f0f2f5; }
+    .chat-input input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 20px; outline: none; }
+    .chat-input button { background: #075e54; color: white; border: none; padding: 10px 20px; margin-left: 10px; border-radius: 20px; cursor: pointer; font-weight: bold; }
+    .preset-buttons { max-width: 600px; margin: 20px auto; display: flex; flex-wrap: wrap; gap: 10px; }
+    .preset-buttons button { padding: 8px 12px; background: #e2e8f0; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; }
+    .preset-buttons button:hover { background: #cbd5e1; }
+  </style>
+</head>
+<body>
+
+  <div class="preset-buttons">
+    <button onclick="receiveMessage('Hey, what time is the meeting tomorrow?')">Benign Message</button>
+    <button onclick="receiveMessage('URGENT: I am in a meeting. I need you to login immediately and process a wire transfer. - CEO')">Fake CEO</button>
+    <button onclick="receiveMessage('Your account has been suspended. Reply with your OTP to verify and unlock your account immediately.')">Fake OTP</button>
+    <button onclick="receiveMessage('IT Support Desk: Final warning. Your password expires in 10 mins. Click here to update your account.')">Fake IT Support</button>
+  </div>
+
+  <div class="chat-container">
+    <div class="chat-header">Enterprise Secure Chat</div>
+    <div class="chat-messages" id="messages">
+      <div class="message received">Welcome to the secure chat portal.</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="msgInput" placeholder="Type a message..." onkeypress="if(event.key === 'Enter') sendMessage()">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    function receiveMessage(text) {
+      const msgs = document.getElementById('messages');
+      const el = document.createElement('div');
+      el.className = 'message received';
+      el.textContent = text;
+      msgs.appendChild(el);
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('msgInput');
+      const text = input.value.trim();
+      if (!text) return;
+      const msgs = document.getElementById('messages');
+      const el = document.createElement('div');
+      el.className = 'message sent';
+      el.textContent = text;
+      msgs.appendChild(el);
+      input.value = '';
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+  </script>
+</body>
+</html>

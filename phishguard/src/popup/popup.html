@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhishGuard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../shared/theme.css" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+
+
+
+  <!-- ── Header ───────────────────────────────────────────────── -->
+  <header class="header">
+    <div class="logo">
+      <div class="logo-shield">
+        <svg viewBox="0 0 24 24" fill="none" style="width:28px;height:28px" stroke="url(#shieldGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          <defs>
+            <linearGradient id="shieldGrad" x1="12" y1="2" x2="12" y2="22" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#38bdf8"/>
+              <stop offset="1" stop-color="#818cf8"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="logo-text-wrap">
+        <span class="logo-title">PhishGuard</span>
+        <span class="logo-subtitle">REAL-TIME PROTECTION</span>
+      </div>
+    </div>
+    <button id="btn-settings" class="icon-btn" title="Settings" aria-label="Open settings">
+      <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- ── Main Content ──────────────────────────────────────────── -->
+  <main id="main-content">
+
+    <!-- Loading state -->
+    <section id="state-loading" class="state-panel" aria-live="polite">
+      <div class="breathing-loader">
+        <div class="breath-ring breath-ring-1"></div>
+        <div class="breath-ring breath-ring-2"></div>
+        <div class="breath-ring breath-ring-3"></div>
+        <div class="breath-center">
+          <svg viewBox="0 0 24 24" fill="none" class="breath-icon">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#38bdf8" stroke-width="1.5"/>
+          </svg>
+        </div>
+      </div>
+      <p class="state-text">Analyzing domain…</p>
+      <p class="state-subtext">Running security checks</p>
+    </section>
+
+    <!-- Error state -->
+    <section id="state-error" class="state-panel hidden" aria-live="polite">
+      <div class="state-icon">⚔️</div>
+      <p class="state-text">Cannot analyze this page</p>
+      <p class="state-subtext" id="error-reason">This domain is not a standard web page.</p>
+    </section>
+
+    <!-- Result state -->
+    <section id="state-result" class="hidden" aria-live="polite">
+
+      <!-- ── Breathing Form Card ──────────────────────────── -->
+      <div class="breathing-card" id="breathing-card">
+
+
+        <!-- Form label (safe/suspicious/phishing) -->
+        <div class="form-header">
+          <div class="form-icon-wrap" id="form-icon-wrap">
+            <!-- Injected by JS -->
+          </div>
+          <div class="form-info">
+            <div class="form-technique" id="form-technique">Status</div>
+            <div class="form-name" id="form-name">SAFE</div>
+          </div>
+          <div class="score-ring-wrap">
+            <svg class="score-ring" viewBox="0 0 44 44">
+              <circle class="ring-bg" cx="22" cy="22" r="18" fill="none" stroke-width="3"/>
+              <circle class="ring-fill" id="ring-fill" cx="22" cy="22" r="18" fill="none" stroke-width="3"
+                stroke-dasharray="113" stroke-dashoffset="113" stroke-linecap="round"
+                transform="rotate(-90 22 22)"/>
+            </svg>
+            <span class="score-value" id="score-value">0</span>
+          </div>
+        </div>
+
+
+
+        <!-- URL Display -->
+        <div class="url-display">
+          <span class="url-badge" id="url-protocol-badge">HTTPS</span>
+          <span class="url-domain-text" id="url-domain-text">example.com</span>
+          <span class="url-path-text" id="url-path-text"></span>
+        </div>
+      </div>
+
+      <!-- ── Advice Scroll ───────────────────────────────── -->
+      <div class="advice-scroll hidden" id="advice-scroll">
+        <div class="advice-ornament"></div>
+        <ul class="advice-list" id="advice-list"></ul>
+        <div class="advice-ornament bot"></div>
+      </div>
+
+      <!-- ── AI Trust Verification Layer ───────────────────── -->
+      <div class="panel-block" id="ai-trust-panel" style="display: none; margin-bottom: 8px; border-color: #a855f7;">
+        <div class="panel-header" style="color: #a855f7; border-bottom-color: rgba(168,85,247,0.2);">
+          <span class="panel-icon">🛡️</span>
+          <span class="panel-title">AI Trust Verification</span>
+          <span class="signal-count" id="ai-trust-badge" style="background-color: #f3e8ff; color: #7e22ce; border-color: #d8b4fe;">SAFE</span>
+        </div>
+        <div style="padding: 10px; display: flex; flex-direction: column; gap: 8px;">
+          <div class="ai-score-row">
+            <span class="ai-score-label">Language Risk</span>
+            <div class="ai-progress-bg"><div id="ai-lang-progress" class="ai-progress-fill"></div></div>
+            <span class="ai-score-num" id="ai-lang-score">0/100</span>
+          </div>
+          <div class="ai-score-row">
+            <span class="ai-score-label">Brand Verification</span>
+            <div class="ai-progress-bg"><div id="ai-brand-progress" class="ai-progress-fill"></div></div>
+            <span class="ai-score-num" id="ai-brand-score">0/100</span>
+          </div>
+          <div class="ai-score-row">
+            <span class="ai-score-label">Behavior Score</span>
+            <div class="ai-progress-bg"><div id="ai-behavior-progress" class="ai-progress-fill"></div></div>
+            <span class="ai-score-num" id="ai-behavior-score">0/100</span>
+          </div>
+          <div class="ai-score-row">
+            <span class="ai-score-label">Link Analysis</span>
+            <div class="ai-progress-bg"><div id="ai-link-progress" class="ai-progress-fill"></div></div>
+            <span class="ai-score-num" id="ai-link-score">0/100</span>
+          </div>
+          <div style="margin-top: 4px; display: flex; align-items: center; justify-content: space-between; font-size: 11px; border-top: 1px solid rgba(168,85,247,0.1); padding-top: 6px;">
+            <span style="color: var(--faint);">Final Trust Score</span>
+            <span id="ai-final-trust-score" style="font-weight: 700; color: #a855f7;">0/100</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── AI Engine Status ───────────────────────────── -->
+      <div class="panel-block" id="ai-engine-block" style="display: none;">
+        <div class="panel-header" style="color: #c084fc;">
+          <span class="panel-icon">🧠</span>
+          <span class="panel-title">AI Threat Model</span>
+          <span class="signal-count" id="ai-confidence-score" style="background-color: #f3e8ff; color: #7e22ce;">0%</span>
+        </div>
+        <p style="font-size: 12px; color: var(--faint); margin: 8px 12px 12px;">Our client-side machine learning model has analyzed this domain structure.</p>
+      </div>
+
+      <!-- ── Threat Signals ─────────────────────────────── -->
+      <div class="panel-block" id="signals-block">
+        <div class="panel-header">
+          <span class="panel-icon">⚡</span>
+          <span class="panel-title">Threat Signals</span>
+          <span class="signal-count" id="signal-count">0</span>
+        </div>
+        <div class="signals-list" id="signals-list">
+          <!-- Injected by JS -->
+        </div>
+      </div>
+
+      <!-- ── Full Analysis (collapsible) ──────────────── -->
+      <details class="panel-block" id="analysis-details">
+        <summary class="panel-header panel-summary">
+          <span class="panel-icon">🔍</span>
+          <span class="panel-title">Full Analysis</span>
+          <span class="panel-chevron">›</span>
+        </summary>
+        <div class="analysis-table-wrap">
+          <table class="analysis-table">
+            <thead>
+              <tr>
+                <th>Rule</th>
+                <th>Impact</th>
+                <th>Finding</th>
+              </tr>
+            </thead>
+            <tbody id="analysis-tbody"></tbody>
+          </table>
+        </div>
+      </details>
+
+      <!-- ── Action Row ─────────────────────────────────── -->
+      <div class="action-row">
+        <button class="btn-action tbs-btn st-safe btn-trust"   id="btn-whitelist">
+          <svg viewBox="0 0 20 20" fill="currentColor" style="width:13px;height:13px"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          Trust Domain
+        </button>
+        <button class="btn-action tbs-btn btn-scroll"  id="btn-copy">
+          <svg viewBox="0 0 20 20" fill="currentColor" style="width:13px;height:13px"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>
+          Copy Report
+        </button>
+        <button class="btn-action tbs-btn st-warn btn-report"  id="btn-report">
+          <svg viewBox="0 0 20 20" fill="currentColor" style="width:13px;height:13px"><path fill-rule="evenodd" d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 7l2.55 2.4A1 1 0 0116 11H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z" clip-rule="evenodd"/></svg>
+          Report Site
+        </button>
+        <button class="btn-action tbs-btn btn-rescan" id="btn-rescan">
+          <svg viewBox="0 0 20 20" fill="currentColor" style="width:13px;height:13px"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/></svg>
+          Rescan
+        </button>
+      </div>
+
+      <!-- ── Privacy Seal ───────────────────────────────── -->
+      <div class="privacy-seal">
+        <span class="seal-icon">🛡️</span>
+        <span>Analysis runs <strong>locally</strong>. No data leaves your device.</span>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Toast -->
+  <div class="tbs-toast hidden" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

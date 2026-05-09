@@ -1,0 +1,258 @@
+/* ═══════════════════════════════════════════════════════
+   THREAT BREATHING STYLE — Shared Design System
+   Import this in both popup.css and options.css
+   ═══════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap');
+
+/* ── Design Tokens ─────────────────────────────────── */
+:root {
+  /* Base */
+  --bg:          #030408;
+  --bg2:         #07080f;
+  --surface:     rgba(8, 10, 24, 0.82);
+  --surface2:    rgba(12, 16, 36, 0.88);
+  --surface3:    rgba(18, 22, 48, 0.92);
+  --border:      rgba(255,255,255,0.06);
+  --border2:     rgba(255,255,255,0.12);
+
+  /* Text */
+  --text:        #e8edf8;
+  --muted:       #7a84a8;
+  --faint:       #363d5c;
+
+  /* Fonts */
+  --font:        'Inter', sans-serif;
+  --font-mono:   'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+
+  /* ── STATUS: Water Breathing (Safe) */
+  --safe:        #06d6a0;
+  --safe-2:      #0ea472;
+  --safe-glow:   rgba(6,214,160,0.45);
+  --safe-dim:    rgba(6,214,160,0.10);
+  --safe-border: rgba(6,214,160,0.30);
+
+  /* ── STATUS: Thunder Breathing (Suspicious) */
+  --warn:        #fbbf24;
+  --warn-2:      #f59e0b;
+  --warn-glow:   rgba(251,191,36,0.45);
+  --warn-dim:    rgba(251,191,36,0.10);
+  --warn-border: rgba(251,191,36,0.30);
+
+  /* ── STATUS: Flame Breathing (Phishing) */
+  --danger:      #ff4757;
+  --danger-2:    #e81c36;
+  --danger-glow: rgba(255,71,87,0.50);
+  --danger-dim:  rgba(255,71,87,0.12);
+  --danger-border:rgba(255,71,87,0.35);
+
+  /* ── Blade (accent blue) */
+  --blade:       #38bdf8;
+  --blade-glow:  rgba(56,189,248,0.35);
+
+  /* Radii */
+  --r-sm: 6px; --r: 10px; --r-lg: 14px; --r-full: 9999px;
+
+  /* Easing */
+  --ease:   cubic-bezier(0.4,0,0.2,1);
+  --bounce: cubic-bezier(0.34,1.56,0.64,1);
+}
+
+/* ── Base Reset ────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-family: var(--font); font-size: 14px; color: var(--text); background: var(--bg); -webkit-font-smoothing: antialiased; }
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-thumb { background: var(--faint); border-radius: 3px; }
+.hidden { display: none !important; }
+
+
+
+/* ── Glassmorphism Card ────────────────────────────── */
+.tbs-card {
+  background:      var(--surface);
+  border:          1px solid var(--border2);
+  border-radius:   var(--r-lg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  position: relative; overflow: hidden;
+}
+.tbs-card.st-safe       { border-color: var(--safe-border);   box-shadow: 0 0 20px rgba(6,214,160,0.10), inset 0 0 30px rgba(6,214,160,0.03); }
+.tbs-card.st-suspicious { border-color: var(--warn-border);   box-shadow: 0 0 20px rgba(251,191,36,0.10), inset 0 0 30px rgba(251,191,36,0.03); }
+.tbs-card.st-phishing   { border-color: var(--danger-border); box-shadow: 0 0 30px rgba(255,71,87,0.18), inset 0 0 30px rgba(255,71,87,0.05); animation: card-danger 2.5s ease-in-out infinite; }
+@keyframes card-danger { 0%,100% { box-shadow: 0 0 30px rgba(255,71,87,0.18); } 50% { box-shadow: 0 0 50px rgba(255,71,87,0.35); } }
+
+/* ── Status Badge ──────────────────────────────────── */
+.tbs-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 10px; border-radius: var(--r-full);
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.5px; border: 1px solid;
+}
+.tbs-badge.st-safe       { background: var(--safe-dim);   color: var(--safe);   border-color: var(--safe-border); }
+.tbs-badge.st-suspicious { background: var(--warn-dim);   color: var(--warn);   border-color: var(--warn-border); }
+.tbs-badge.st-phishing   { background: var(--danger-dim); color: var(--danger); border-color: var(--danger-border); }
+
+/* ── Glow Text ─────────────────────────────────────── */
+.tbs-title-safe       { color: var(--safe);   text-shadow: 0 0 14px var(--safe-glow); }
+.tbs-title-suspicious { color: var(--warn);   text-shadow: 0 0 14px var(--warn-glow); }
+.tbs-title-phishing   { color: var(--danger); text-shadow: 0 0 18px var(--danger-glow); animation: text-flicker 3s ease-in-out infinite; }
+@keyframes text-flicker { 0%,88%,100%{opacity:1;} 92%{opacity:0.75;} }
+
+/* ── Buttons ───────────────────────────────────────── */
+.tbs-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+  padding: 8px 16px; border-radius: var(--r-sm);
+  border: 1px solid var(--border2); background: rgba(0,0,0,0.45);
+  color: var(--muted); font-family: var(--font); font-size: 12px; font-weight: 600;
+  cursor: pointer; letter-spacing: 0.5px;
+  transition: all 0.2s var(--ease);
+  backdrop-filter: blur(4px);
+}
+.tbs-btn:hover { color: var(--text); background: rgba(255,255,255,0.05); border-color: var(--border2); transform: translateY(-1px); }
+.tbs-btn:active { transform: translateY(0) scale(0.98); }
+
+.tbs-btn.st-safe:hover    { border-color: var(--safe-border);   color: var(--safe);   box-shadow: 0 0 12px var(--safe-glow); }
+.tbs-btn.st-warn:hover    { border-color: var(--warn-border);   color: var(--warn);   box-shadow: 0 0 12px var(--warn-glow); }
+.tbs-btn.st-danger:hover  { border-color: var(--danger-border); color: var(--danger); box-shadow: 0 0 12px var(--danger-glow); }
+
+.tbs-btn-primary {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border: none; color: white; font-weight: 700;
+  box-shadow: 0 4px 14px rgba(99,102,241,0.35);
+}
+.tbs-btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+/* ── Toggle Switch ────────────────────────────────── */
+.tbs-toggle {
+  position: relative; display: inline-block;
+  width: 46px; height: 26px; flex-shrink: 0; cursor: pointer;
+}
+.tbs-toggle input { opacity: 0; width: 0; height: 0; }
+.tbs-slider {
+  position: absolute; inset: 0;
+  background: rgba(10,14,32,0.9);
+  border-radius: 26px;
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: background 0.3s var(--ease), border-color 0.3s, box-shadow 0.3s;
+}
+.tbs-slider::before {
+  content: '';
+  position: absolute;
+  width: 20px; height: 20px;
+  left: 2px; top: 2px;
+  background: #4a5270;
+  border-radius: 50%;
+  transition: transform 0.3s var(--bounce), background 0.3s, box-shadow 0.3s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
+/* OFF label */
+.tbs-slider::after {
+  content: 'OFF';
+  position: absolute;
+  right: 6px; top: 50%; transform: translateY(-50%);
+  font-size: 7px; font-weight: 700; letter-spacing: 0.5px;
+  color: #4a5270; font-family: var(--font);
+  transition: opacity 0.2s;
+}
+.tbs-toggle input:checked + .tbs-slider {
+  background: rgba(6,214,160,0.18);
+  border-color: var(--safe);
+  box-shadow: 0 0 10px rgba(6,214,160,0.35), 0 0 20px rgba(6,214,160,0.15);
+}
+.tbs-toggle input:checked + .tbs-slider::before {
+  transform: translateX(20px);
+  background: var(--safe);
+  box-shadow: 0 0 8px var(--safe-glow), 0 1px 4px rgba(0,0,0,0.3);
+}
+.tbs-toggle input:checked + .tbs-slider::after {
+  content: 'ON';
+  right: auto; left: 6px;
+  color: var(--safe);
+}
+
+/* ── Input Fields ────────────────────────────────── */
+.tbs-input {
+  background: rgba(8, 12, 30, 0.85);
+  border: 1px solid rgba(56,189,248,0.22);
+  color: #d4daf0;
+  padding: 9px 12px; border-radius: var(--r-sm);
+  font-family: var(--font); font-size: 13px; font-weight: 500;
+  width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.tbs-input::placeholder { color: #3d4870; }
+.tbs-input:focus {
+  outline: none;
+  border-color: var(--blade);
+  box-shadow: 0 0 0 2px rgba(56,189,248,0.12), 0 0 12px rgba(56,189,248,0.08);
+  color: #e8edf8;
+}
+.tbs-textarea { resize: vertical; min-height: 90px; line-height: 1.5; font-size: 12px; }
+.tbs-select {
+  appearance: none; cursor: pointer; padding-right: 30px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2338bdf8'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 8px center; background-size: 16px;
+}
+
+/* ── Section Header ────────────────────────────────── */
+.tbs-section-head { margin-bottom: 14px; }
+.tbs-section-head h2 { font-size: 16px; font-weight: 600; margin-bottom: 4px; letter-spacing: 0.3px; }
+.tbs-section-head p  { font-size: 12px; color: var(--muted); }
+
+
+
+/* ── Divider with text ─────────────────────────────── */
+.tbs-divider { display: flex; align-items: center; gap: 8px; }
+.tbs-divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--border2), transparent); }
+.tbs-divider-text { font-size: 9px; letter-spacing: 2px; color: var(--faint); white-space: nowrap; }
+
+/* ── Info Banner ───────────────────────────────────── */
+.tbs-banner { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; border-radius: var(--r-sm); font-size: 12px; line-height: 1.5; border: 1px solid; }
+.tbs-banner.warn { background: var(--warn-dim); border-color: var(--warn-border); color: var(--muted); }
+.tbs-banner.danger { background: var(--danger-dim); border-color: var(--danger-border); color: var(--muted); }
+
+/* ── Toast ─────────────────────────────────────────── */
+.tbs-toast {
+  position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%);
+  background: rgba(10,12,28,0.97); color: var(--text);
+  font-size: 12px; font-weight: 600; padding: 8px 16px;
+  border-radius: var(--r-full); border: 1px solid var(--border2);
+  white-space: nowrap; z-index: 500;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s var(--ease), transform 0.2s var(--bounce);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.6);
+}
+.tbs-toast.show { opacity: 1; transform: translateX(-50%) translateY(-2px); pointer-events: auto; }
+
+/* ── Particle canvas helper ────────────────────────── */
+.tbs-particles { position: absolute; inset: 0; pointer-events: none; }
+
+/* ── Score ring ────────────────────────────────────── */
+.tbs-ring svg { overflow: visible; }
+.tbs-ring .ring-bg   { stroke: rgba(255,255,255,0.06); }
+.tbs-ring .ring-fill { transition: stroke-dashoffset 0.8s var(--ease), stroke 0.4s; stroke-linecap: round; }
+.st-safe .ring-fill       { stroke: var(--safe); }
+.st-suspicious .ring-fill { stroke: var(--warn); }
+.st-phishing .ring-fill   { stroke: var(--danger); }
+
+/* ── Hover card effect ─────────────────────────────── */
+.tbs-hover { transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease); }
+.tbs-hover:hover { transform: translateY(-2px); }
+
+
+
+/* ── Slide-up entry ────────────────────────────────── */
+.tbs-enter { animation: tbs-slide-up 0.3s var(--ease) both; }
+@keyframes tbs-slide-up { from{opacity:0;transform:translateY(6px);} to{opacity:1;transform:translateY(0);} }
+
+/* ── Domain item (whitelist) ───────────────────────── */
+.tbs-domain-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 10px; background: rgba(0,0,0,0.3);
+  border: 1px solid var(--border); border-radius: var(--r-sm);
+  font-size: 13px; animation: tbs-slide-up 0.2s var(--ease) both;
+}
+.tbs-domain-item:hover { border-color: var(--border2); }
+.tbs-remove-btn { background: transparent; border: none; color: var(--faint); cursor: pointer; font-size: 14px; padding: 2px 6px; border-radius: 4px; transition: color 0.15s; }
+.tbs-remove-btn:hover { color: var(--danger); }

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Threat Breathing Style — Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../shared/theme.css" />
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <div class="page-wrap">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <svg class="logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 2L4 7V16C4 22.627 9.373 28 16 30C22.627 28 28 22.627 28 16V7L16 2Z" fill="url(#sg2)"/>
+          <path d="M11 16L14.5 19.5L21 12.5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="sg2" x1="4" y1="2" x2="28" y2="30" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#6366f1"/><stop offset="1" stop-color="#8b5cf6"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div>
+          <div class="sidebar-brand">PhishGuard</div>
+          <div class="sidebar-version">v1.0.0</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#sec-general"      class="nav-item active" data-section="sec-general">⚙️ General</a>
+        <a href="#sec-threat-intel" class="nav-item" data-section="sec-threat-intel">🛡️ Threat Intel</a>
+        <a href="#sec-blocklist"    class="nav-item" data-section="sec-blocklist">📋 Blocklist</a>
+        <a href="#sec-whitelist"    class="nav-item" data-section="sec-whitelist">✅ Whitelist</a>
+        <a href="#sec-ai-trust"     class="nav-item" data-section="sec-ai-trust">🧠 AI Trust</a>
+        <a href="#sec-privacy"      class="nav-item" data-section="sec-privacy">🔒 Privacy</a>
+        <a href="#sec-about"        class="nav-item" data-section="sec-about">ℹ️ About</a>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <main class="main-content">
+      <div class="content-header">
+        <h1>Settings</h1>
+            <button class="tbs-btn tbs-btn-primary btn-save" id="btn-save">Save Changes</button>
+      </div>
+
+      <!-- ── General ──────────────────────────────────────────────── -->
+      <section class="settings-section" id="sec-general">
+        <div class="tbs-section-head">
+          <h2>⚙️ General</h2>
+          <p>Core behavior and analysis preferences.</p>
+        </div>
+
+        <div class="setting-card">
+          <div class="setting-row">
+            <div class="setting-info">
+              <label class="setting-label" for="toggle-enabled">🛡️ Activate Protection</label>
+              <span class="setting-desc">Enable or disable all real-time threat analysis.</span>
+            </div>
+            <label class="tbs-toggle" id="toggle-enabled-wrap">
+              <input type="checkbox" id="toggle-enabled" checked />
+              <span class="tbs-slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <label class="setting-label" for="toggle-content-script">Page Signal Detection</label>
+              <span class="setting-desc">Detect password fields on suspicious pages (minimal, never reads input values).</span>
+            </div>
+            <label class="tbs-toggle">
+              <input type="checkbox" id="toggle-content-script" checked />
+              <span class="tbs-slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <label class="setting-label" for="select-threshold">Sensitivity Level</label>
+              <span class="setting-desc">Adjust when sites are flagged as suspicious.</span>
+            </div>
+            <select class="tbs-input tbs-select select-field" id="select-threshold">
+              <option value="relaxed">Relaxed (fewer alerts)</option>
+              <option value="balanced" selected>Balanced (recommended)</option>
+              <option value="strict">Strict (more alerts)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="setting-card">
+          <div class="setting-row">
+            <div class="setting-info">
+              <label class="setting-label" for="cache-ttl">Cache Duration</label>
+              <span class="setting-desc">How long to cache analysis results (minutes).</span>
+            </div>
+            <div class="number-input-wrap">
+              <input type="number" id="cache-ttl" class="number-input" min="1" max="60" value="5" />
+              <span class="input-unit">min</span>
+            </div>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <span class="setting-label">Clear Cache</span>
+              <span class="setting-desc">Force re-analysis on next page visit.</span>
+            </div>
+            <button class="btn-secondary" id="btn-clear-cache">Clear Now</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Threat Intel ─────────────────────────────────────────── -->
+      <section class="settings-section" id="sec-threat-intel">
+        <div class="tbs-section-head">
+          <h2>🛡️ Threat Intelligence</h2>
+          <p>Configure external threat intelligence sources.</p>
+        </div>
+
+        <div class="setting-card">
+          <div class="info-banner warning">
+            <span>⚠️</span>
+            <p>When enabled, URLs are sent to Google's servers. Only enable if you accept this trade-off.</p>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <label class="setting-label" for="toggle-safe-browsing">Google Safe Browsing</label>
+              <span class="setting-desc">Real-time malware and phishing detection by Google.</span>
+            </div>
+            <label class="tbs-toggle">
+              <input type="checkbox" id="toggle-safe-browsing" />
+              <span class="tbs-slider"></span>
+            </label>
+          </div>
+
+          <div class="api-key-section" id="api-key-section">
+            <label class="setting-label" for="input-api-key">API Key</label>
+            <span class="setting-desc">
+              Get a free key at
+              <a href="https://developers.google.com/safe-browsing/v4/get-started" target="_blank" class="link">
+                developers.google.com/safe-browsing
+              </a>
+            </span>
+            <div class="api-key-row">
+              <input type="password" id="input-api-key" class="tbs-input" placeholder="AIza..." autocomplete="off" />
+              <button class="btn-icon-sm" id="btn-toggle-key" title="Show/hide key" aria-label="Toggle API key visibility">👁</button>
+            </div>
+            <div class="api-status" id="api-status"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Blocklist ────────────────────────────────────────────── -->
+      <section class="settings-section" id="sec-blocklist">
+        <div class="tbs-section-head">
+          <h2>📋 Custom Blocklist</h2>
+          <p>Import your own phishing domain lists (JSON or plain text).</p>
+        </div>
+
+        <div class="setting-card">
+          <div class="setting-row">
+            <div class="setting-info">
+              <span class="setting-label">Current Blocklist</span>
+              <span class="setting-desc" id="blocklist-count">0 custom entries loaded</span>
+            </div>
+            <button class="btn-secondary btn-danger-hover" id="btn-clear-blocklist">Clear</button>
+          </div>
+
+          <div class="import-section">
+            <label class="setting-label" for="blocklist-import">Import Domains</label>
+            <span class="setting-desc">Paste one domain per line, or import a JSON array.</span>
+            <textarea
+              id="blocklist-import"
+              class="tbs-input tbs-textarea"
+              placeholder="phishing-site.com&#10;malware-domain.tk&#10;fake-paypal.xyz"
+              rows="5"
+            ></textarea>
+            <div class="import-actions">
+              <label class="btn-secondary file-label" for="file-import">
+                📁 Import File
+                <input type="file" id="file-import" accept=".txt,.json" class="file-input" />
+              </label>
+              <button class="tbs-btn tbs-btn-primary" id="btn-import-blocklist">Add to Blocklist</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Whitelist ────────────────────────────────────────────── -->
+      <section class="settings-section" id="sec-whitelist">
+        <div class="tbs-section-head">
+          <h2>✅ Trusted Domains</h2>
+          <p>Domains you've marked as trusted will always show Safe.</p>
+        </div>
+
+        <div class="setting-card">
+          <div class="add-domain-row">
+            <input type="text" id="whitelist-input" class="tbs-input" placeholder="example.com" />
+            <button class="tbs-btn tbs-btn-primary" id="btn-add-whitelist">Add</button>
+          </div>
+          <ul class="domain-list" id="whitelist-list">
+            <!-- Populated by JS -->
+          </ul>
+          <p class="empty-state hidden" id="whitelist-empty">No trusted domains yet.</p>
+        </div>
+      </section>
+
+      <!-- ── AI Trust Verification ────────────────────────────────── -->
+      <section class="settings-section" id="sec-ai-trust">
+        <div class="tbs-section-head">
+          <h2>🧠 AI Trust Verification Layer</h2>
+          <p>Advanced AI-driven analysis for deep phishing detection.</p>
+        </div>
+
+        <div class="setting-card">
+          <div class="setting-row">
+            <div class="setting-info">
+              <label class="setting-label" for="toggle-ai-trust">Enable AI Trust Layer</label>
+              <span class="setting-desc">Perform additional AI verification when heuristics mark a site as safe.</span>
+            </div>
+            <label class="tbs-toggle">
+              <input type="checkbox" id="toggle-ai-trust" />
+              <span class="tbs-slider"></span>
+            </label>
+          </div>
+
+          <div class="api-key-section" id="gemini-key-section" style="display: none;">
+            <label class="setting-label" for="gemini-api-key">Gemini API Key (Recommended)</label>
+            <span class="setting-desc">Enables deep LLM-based analysis for linguistic and social engineering threats.</span>
+            <div class="api-key-row">
+              <input type="password" id="gemini-api-key" class="tbs-input" placeholder="AIza..." autocomplete="off" />
+              <button class="btn-icon-sm" id="btn-toggle-gemini-key" title="Show/hide key">👁</button>
+            </div>
+            <div class="api-status" id="gemini-status"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Privacy ──────────────────────────────────────────────── -->
+      <section class="settings-section" id="sec-privacy">
+        <div class="tbs-section-head">
+          <h2>🔒 Privacy</h2>
+          <p>What Threat Breathing Style does and does not do with your data.</p>
+        </div>
+
+        <div class="setting-card">
+          <div class="privacy-table">
+            <div class="privacy-row">
+              <div class="privacy-icon safe">✅</div>
+              <div>
+                <strong>Analysis runs locally</strong>
+                <p>All heuristic checks run inside the extension. No URL is ever sent to our servers.</p>
+              </div>
+            </div>
+            <div class="privacy-row">
+              <div class="privacy-icon safe">✅</div>
+              <div>
+                <strong>No browsing history stored</strong>
+                <p>Results are cached in memory only (per session). They are lost when the browser closes.</p>
+              </div>
+            </div>
+            <div class="privacy-row">
+              <div class="privacy-icon safe">✅</div>
+              <div>
+                <strong>No account required</strong>
+                <p>PhishGuard works entirely without registration or login.</p>
+              </div>
+            </div>
+            <div class="privacy-row">
+              <div class="privacy-icon warn">⚠️</div>
+              <div>
+                <strong>Google Safe Browsing (optional)</strong>
+                <p>If enabled, URLs are sent to Google's Safe Browsing API. Google's privacy policy applies. You can disable this at any time.</p>
+              </div>
+            </div>
+            <div class="privacy-row">
+              <div class="privacy-icon safe">✅</div>
+              <div>
+                <strong>Content script (optional)</strong>
+                <p>Only counts password input fields. Never reads field values or user input.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── About ────────────────────────────────────────────────── -->
+      <section class="settings-section" id="sec-about">
+        <div class="tbs-section-head">
+          <h2>ℹ️ About</h2>
+        </div>
+        <div class="setting-card about-card">
+          <div class="about-logo">
+            <svg viewBox="0 0 32 32" fill="none" style="width:48px;height:48px">
+              <path d="M16 2L4 7V16C4 22.627 9.373 28 16 30C22.627 28 28 22.627 28 16V7L16 2Z" fill="url(#sg3)"/>
+              <path d="M11 16L14.5 19.5L21 12.5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <defs>
+                <linearGradient id="sg3" x1="4" y1="2" x2="28" y2="30" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#6366f1"/><stop offset="1" stop-color="#8b5cf6"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div>
+              <h3>PhishGuard</h3>
+              <p>Version 1.0.0</p>
+            </div>
+          </div>
+
+          <div class="about-details">
+            <p>Real-time phishing detection powered by <strong>multi-layer heuristic analysis</strong>. Designed for speed, privacy, and explainability.</p>
+
+            <h4>Scoring Thresholds</h4>
+            <div class="threshold-table">
+              <div class="threshold-row safe">
+                <span class="threshold-badge">Safe</span>
+                <span>Score 0 – 19</span>
+                <span>No significant risk signals detected.</span>
+              </div>
+              <div class="threshold-row suspicious">
+                <span class="threshold-badge">Suspicious</span>
+                <span>Score 20 – 49</span>
+                <span>One or more risk factors present. Proceed with caution.</span>
+              </div>
+              <div class="threshold-row phishing">
+                <span class="threshold-badge">Phishing</span>
+                <span>Score 50+</span>
+                <span>Strong phishing indicators. Do not enter credentials.</span>
+              </div>
+            </div>
+
+            <h4>Performance</h4>
+            <p>Heuristic analysis typically completes in &lt;5ms. Threat intel checks are async and update the badge when complete.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Toast -->
+      <div class="tbs-toast hidden" id="options-toast" role="status" aria-live="polite"></div>
+
+    </main>
+  </div>
+
+  <script src="options.js" type="module"></script>
+</body>
+</html>

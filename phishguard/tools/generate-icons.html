@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>PhishGuard Icon Generator</title>
+</head>
+<body>
+<canvas id="c128" width="128" height="128"></canvas>
+<canvas id="c48"  width="48"  height="48"></canvas>
+<canvas id="c32"  width="32"  height="32"></canvas>
+<canvas id="c16"  width="16"  height="16"></canvas>
+<script>
+// Generate shield icons at multiple sizes and download them
+const sizes = [
+  { id: 'c128', size: 128 },
+  { id: 'c48',  size: 48  },
+  { id: 'c32',  size: 32  },
+  { id: 'c16',  size: 16  },
+];
+
+function drawShield(canvas, size, variant = 'default') {
+  const ctx = canvas.getContext('2d');
+  const s   = size;
+  ctx.clearRect(0, 0, s, s);
+
+  // Scale factor
+  const f = s / 128;
+
+  // Shield path (scaled)
+  ctx.save();
+  ctx.scale(f, f);
+
+  // Create gradient
+  const grad = ctx.createLinearGradient(16, 4, 112, 124);
+
+  switch (variant) {
+    case 'safe':
+      grad.addColorStop(0, '#22c55e');
+      grad.addColorStop(1, '#16a34a');
+      break;
+    case 'suspicious':
+      grad.addColorStop(0, '#f59e0b');
+      grad.addColorStop(1, '#d97706');
+      break;
+    case 'phishing':
+      grad.addColorStop(0, '#ef4444');
+      grad.addColorStop(1, '#dc2626');
+      break;
+    default:
+      grad.addColorStop(0, '#6366f1');
+      grad.addColorStop(1, '#8b5cf6');
+  }
+
+  // Shield shape
+  ctx.beginPath();
+  ctx.moveTo(64, 8);
+  ctx.lineTo(16, 28);
+  ctx.lineTo(16, 64);
+  ctx.quadraticCurveTo(16, 100, 64, 120);
+  ctx.quadraticCurveTo(112, 100, 112, 64);
+  ctx.lineTo(112, 28);
+  ctx.closePath();
+  ctx.fillStyle = grad;
+  ctx.shadowColor = 'rgba(0,0,0,0.3)';
+  ctx.shadowBlur  = 8;
+  ctx.fill();
+  ctx.shadowBlur  = 0;
+
+  // White inner shape / symbol
+  ctx.strokeStyle = 'white';
+  ctx.lineWidth   = 8;
+  ctx.lineCap     = 'round';
+  ctx.lineJoin    = 'round';
+
+  if (variant === 'phishing') {
+    // X mark
+    ctx.beginPath();
+    ctx.moveTo(48, 48); ctx.lineTo(80, 80);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(80, 48); ctx.lineTo(48, 80);
+    ctx.stroke();
+  } else if (variant === 'suspicious') {
+    // Exclamation mark
+    ctx.beginPath();
+    ctx.moveTo(64, 42); ctx.lineTo(64, 72);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(64, 86, 4, 0, Math.PI * 2);
+    ctx.fillStyle = 'white';
+    ctx.fill();
+  } else {
+    // Checkmark
+    ctx.beginPath();
+    ctx.moveTo(42, 64); ctx.lineTo(58, 80); ctx.lineTo(86, 50);
+    ctx.stroke();
+  }
+
+  ctx.restore();
+}
+
+// Generate all variants and sizes
+function generateAll() {
+  const variants = ['default', 'safe', 'suspicious', 'phishing'];
+  
+  sizes.forEach(({ id, size }) => {
+    const canvas = document.getElementById(id);
+    canvas.width  = size;
+    canvas.height = size;
+    drawShield(canvas, size, 'default');
+  });
+  
+  console.log('Icons rendered. Right-click each canvas to save.');
+}
+
+generateAll();
+
+// Auto-download helper (for dev use)
+function downloadIcon(canvasId, filename) {
+  const canvas = document.getElementById(canvasId);
+  const link   = document.createElement('a');
+  link.download = filename;
+  link.href     = canvas.toDataURL('image/png');
+  link.click();
+}
+</script>
+<p style="font-family:sans-serif;margin:20px">
+  Icons generated above. Right-click to save, or they're auto-generated at runtime in the extension via SVG data URIs.
+</p>
+</body>
+</html>

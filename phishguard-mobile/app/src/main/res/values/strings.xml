@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PhishGuard</string>
+    <string name="app_tagline">SMS Phishing Protection</string>
+
+    <!-- Dashboard -->
+    <string name="status_active">Protection Active</string>
+    <string name="status_inactive">Protection Inactive</string>
+    <string name="status_monitoring">Monitoring incoming SMS for smishing attacks</string>
+    <string name="total_scans">Total Scans</string>
+    <string name="threats_blocked">Threats Blocked</string>
+    <string name="messages_safe">Messages Safe</string>
+    <string name="recent_threats">Recent Threats</string>
+    <string name="no_threats_yet">No threats detected yet.\nYou\'re well protected!</string>
+    <string name="view_all">View All</string>
+
+    <!-- Manual Scan -->
+    <string name="manual_scan_title">Manual SMS Scanner</string>
+    <string name="manual_scan_hint">Paste suspicious SMS text here to analyze it…</string>
+    <string name="btn_analyze">Analyze Message</string>
+    <string name="btn_clear">Clear</string>
+    <string name="scan_result_title">Scan Result</string>
+    <string name="signal_breakdown">Signal Breakdown</string>
+    <string name="no_signals">No threat signals detected</string>
+
+    <!-- Threat Detail -->
+    <string name="threat_detail_title">Threat Detail</string>
+    <string name="sender_label">Sender</string>
+    <string name="score_label">Risk Score</string>
+    <string name="category_label">Category</string>
+    <string name="signals_label">Detected Signals</string>
+    <string name="timestamp_label">Received At</string>
+    <string name="message_preview">Message Preview</string>
+
+    <!-- History -->
+    <string name="history_title">Scan History</string>
+    <string name="tab_all">All</string>
+    <string name="tab_phishing">Phishing</string>
+    <string name="tab_suspicious">Suspicious</string>
+    <string name="tab_safe">Safe</string>
+    <string name="empty_history">No scan records found</string>
+    <string name="clear_history">Clear History</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="setting_protection">Real-Time Protection</string>
+    <string name="setting_protection_desc">Scan incoming SMS automatically</string>
+    <string name="setting_notifications">Threat Notifications</string>
+    <string name="setting_notifications_desc">Alert when suspicious SMS detected</string>
+    <string name="setting_sensitivity">Detection Sensitivity</string>
+    <string name="setting_default_sms">Set as Default SMS App</string>
+    <string name="setting_default_sms_desc">Required for full SMS protection on Android 10+</string>
+    <string name="setting_about">About PhishGuard</string>
+    <string name="setting_version">Version 1.0.0</string>
+    <string name="sensitivity_low">Low (Fewer alerts)</string>
+    <string name="sensitivity_medium">Medium (Balanced)</string>
+    <string name="sensitivity_high">High (Maximum protection)</string>
+
+    <!-- Permissions -->
+    <string name="perm_sms_title">SMS Access Required</string>
+    <string name="perm_sms_message">PhishGuard needs SMS permission to scan incoming messages for phishing attacks. Your messages are analyzed locally and never leave your device.</string>
+    <string name="perm_notification_title">Notifications Required</string>
+    <string name="perm_notification_message">Allow PhishGuard to send alerts when a suspicious SMS is detected.</string>
+    <string name="btn_grant">Grant Permission</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_settings">Open Settings</string>
+
+    <!-- Navigation -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_history">History</string>
+    <string name="nav_scan">Scan</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Threat Categories -->
+    <string name="category_phishing">PHISHING</string>
+    <string name="category_suspicious">SUSPICIOUS</string>
+    <string name="category_safe">SAFE</string>
+
+    <!-- Notification -->
+    <string name="notif_channel_name">PhishGuard SMS Alerts</string>
+    <string name="notif_channel_desc">Real-time alerts for suspicious or phishing SMS messages</string>
+    <string name="notif_service_title">PhishGuard is protecting your SMS</string>
+    <string name="notif_tap_details">Tap to view threat details</string>
+</resources>

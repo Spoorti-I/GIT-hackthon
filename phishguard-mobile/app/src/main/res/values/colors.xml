@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Brand Colors -->
+    <color name="phishguard_navy">#0F172A</color>
+    <color name="phishguard_navy_dark">#020617</color>
+    <color name="phishguard_navy_medium">#1E293B</color>
+    <color name="phishguard_navy_light">#334155</color>
+
+    <!-- Electric Blue Accent -->
+    <color name="phishguard_blue">#2563EB</color>
+    <color name="phishguard_blue_light">#3B82F6</color>
+    <color name="phishguard_blue_dark">#1D4ED8</color>
+
+    <!-- Threat Severity Colors -->
+    <color name="threat_phishing">#EF4444</color>
+    <color name="threat_phishing_bg">#FEF2F2</color>
+    <color name="threat_phishing_dark">#DC2626</color>
+
+    <color name="threat_suspicious">#F59E0B</color>
+    <color name="threat_suspicious_bg">#FFFBEB</color>
+    <color name="threat_suspicious_dark">#D97706</color>
+
+    <color name="threat_safe">#10B981</color>
+    <color name="threat_safe_bg">#ECFDF5</color>
+    <color name="threat_safe_dark">#059669</color>
+
+    <!-- Neutral / UI Colors -->
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#F8FAFC</color>
+    <color name="surface_card">#FFFFFF</color>
+    <color name="divider">#E2E8F0</color>
+
+    <color name="text_primary">#0F172A</color>
+    <color name="text_secondary">#475569</color>
+    <color name="text_tertiary">#94A3B8</color>
+    <color name="text_on_dark">#FFFFFF</color>
+    <color name="text_on_dark_secondary">#CBD5E1</color>
+
+    <!-- Bottom Nav -->
+    <color name="nav_selected">#2563EB</color>
+    <color name="nav_unselected">#94A3B8</color>
+    <color name="nav_bg">#FFFFFF</color>
+
+    <!-- Card & Elevation -->
+    <color name="card_stroke">#E2E8F0</color>
+    <color name="shadow">#1A000000</color>
+</resources>
