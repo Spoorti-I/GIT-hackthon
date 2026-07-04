@@ -11,16 +11,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Akashkumbar013/phish-guard.git"
+    "url": "git+https://github.com/Spoorti-I/GIT-hackthon.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Spoorti Inganalli",
   "license": "ISC",
   "type": "module",
   "bugs": {
-    "url": "https://github.com/Akashkumbar013/phish-guard/issues"
+    "url": "https://github.com/Spoorti-I/GIT-hackthon/issues"
   },
-  "homepage": "https://github.com/Akashkumbar013/phish-guard#readme",
+  "homepage": "https://github.com/Spoorti-I/GIT-hackthon#readme",
   "devDependencies": {
     "jest": "^30.4.1"
   },
