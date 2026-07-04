@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "Threat Breathing Style",
-  "short_name": "TBS",
+  "name": "PhishGuard",
+  "short_name": "PhishGuard",
   "version": "1.0.0",
-  "description": "A demon-slaying security guardian. Detects phishing & suspicious sites in real-time using heuristic breathing techniques. Privacy-first. No history stored.",
-  "author": "Threat Breathing Style",
+  "description": "Real-time phishing and suspicious site detection using heuristic analysis. Privacy-first. No browsing history stored.",
+  "author": "Spoorti Inganalli",
 
   "icons": {
     "16":  "assets/icons/icon16.png",
@@ -21,7 +21,7 @@
       "48":  "assets/icons/icon48.png",
       "128": "assets/icons/icon128.png"
     },
-    "default_title": "Threat Breathing Style"
+    "default_title": "PhishGuard"
   },
 
   "background": {
